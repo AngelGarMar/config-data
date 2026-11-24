@@ -55,6 +55,40 @@ spring:
                       - /api/v1/roles/**
               filters:
                 - StripPrefix=2
+                - AuthenticationFilter
+            - id: usuarios-admin
+              uri: lb://USUARIOS
+              predicates:
+                - name: Path
+                  args:
+                    patterns:
+                      - /api/v1/users/{id}
+              filters:
+                - StripPrefix=2
+                - name: AuthenticationFilter
+                  args:
+                    requiredRole: "admin"
+            - id: usuarios-login
+              uri: lb://USUARIOS
+              predicates:
+                - name: Path
+                  args:
+                    patterns:
+                      - /api/v1/users/login
+              filters:
+                - StripPrefix=2
+            - id: usuarios-actuator
+              uri: lb://USUARIOS
+              predicates:
+                - name: Path
+                  args:
+                    patterns:
+                      - /api/v1/USUARIOS/actuator/**
+              filters:
+                - name: AuthenticationFilter
+                  args:
+                    requiredRole: "admin"
+                - StripPrefix=3
             - id: viajes
               uri: lb://VIAJES
               predicates:
