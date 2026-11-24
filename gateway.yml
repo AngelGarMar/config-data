@@ -45,6 +45,15 @@ spring:
                       - /api/v1/paraderos/**
               filters:
                 - StripPrefix=2
+            - id: usuarios-login
+              uri: lb://USUARIOS
+              predicates:
+                - name: Path
+                  args:
+                    patterns:
+                      - /api/v1/users/login
+              filters:
+                - StripPrefix=2
             - id: usuarios
               uri: lb://USUARIOS
               predicates:
@@ -56,15 +65,6 @@ spring:
               filters:
                 - StripPrefix=2
                 - AuthenticationFilter
-            - id: usuarios-login
-              uri: lb://USUARIOS
-              predicates:
-                - name: Path
-                  args:
-                    patterns:
-                      - /api/v1/users/login
-              filters:
-                - StripPrefix=2
             - id: usuarios-admin
               uri: lb://USUARIOS
               predicates:
