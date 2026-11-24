@@ -45,17 +45,6 @@ spring:
                       - /api/v1/paraderos/**
               filters:
                 - StripPrefix=2
-            - id: usuarios
-              uri: lb://USUARIOS
-              predicates:
-                - name: Path
-                  args:
-                    patterns:
-                      - /api/v1/users/**
-                      - /api/v1/roles/**
-              filters:
-                - StripPrefix=2
-                - AuthenticationFilter
             - id: usuarios-admin
               uri: lb://USUARIOS
               predicates:
@@ -68,15 +57,6 @@ spring:
                 - name: AuthenticationFilter
                   args:
                     requiredRole: "admin"
-            - id: usuarios-login
-              uri: lb://USUARIOS
-              predicates:
-                - name: Path
-                  args:
-                    patterns:
-                      - /api/v1/users/login
-              filters:
-                - StripPrefix=2
             - id: usuarios-actuator
               uri: lb://USUARIOS
               predicates:
@@ -89,6 +69,26 @@ spring:
                   args:
                     requiredRole: "admin"
                 - StripPrefix=3
+            - id: usuarios-login
+              uri: lb://USUARIOS
+              predicates:
+                - name: Path
+                  args:
+                    patterns:
+                      - /api/v1/users/login
+              filters:
+                - StripPrefix=2
+            - id: usuarios
+              uri: lb://USUARIOS
+              predicates:
+                - name: Path
+                  args:
+                    patterns:
+                      - /api/v1/users/**
+                      - /api/v1/roles/**
+              filters:
+                - StripPrefix=2
+                - AuthenticationFilter
             - id: viajes
               uri: lb://VIAJES
               predicates:
