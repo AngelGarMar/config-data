@@ -13,9 +13,44 @@ spring:
                 - name: Path
                   args:
                     patterns:
-                      - /api/v1/clientes/**
+                      - /api/v1/clients/**
               filters:
                 - StripPrefix=2
+                - name: AuthenticationFilter
+                  args:
+                    requiredRole: "user,admin"
+            - id: clientes-delete
+              uri: lb://CLIENTES
+              predicates:
+                - name: Path
+                  args:
+                    patterns:
+                      - /api/v1/clients/{id}
+                - name: Method
+                  args:
+                    methods:
+                      - DELETE
+              filters:
+                - StripPrefix=2
+                - name: AuthenticationFilter
+                  args:
+                    requiredRole: "admin"
+            - id: clientes-getall
+              uri: lb://CLIENTES
+              predicates:
+                - name: Path
+                  args:
+                    patterns:
+                      - /api/v1/clients
+                - name: Method
+                  args:
+                    methods:
+                      - GET
+              filters:
+                - StripPrefix=2
+                - name: AuthenticationFilter
+                  args:
+                    requiredRole: "admin"
             - id: conductores
               uri: lb://CONDUCTORES
               predicates:
