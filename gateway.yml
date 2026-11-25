@@ -164,6 +164,9 @@ spring:
                       - /api/v1/viajes/**
               filters:
                 - StripPrefix=2
+                - name: AuthenticationFilter
+                  args:
+                    requiredRole: "user,admin"
 server:
   port: 9000
 #Eureka
