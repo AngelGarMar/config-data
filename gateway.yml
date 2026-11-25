@@ -51,6 +51,38 @@ spring:
                 - name: AuthenticationFilter
                   args:
                     requiredRole: "user,admin"
+            - id: conductores-get
+              uri: lb://CONDUCTORES
+              predicates:
+                - name: Path
+                  args:
+                    patterns:
+                      - /api/v1/drivers/{id}
+                - name: Method
+                  args:
+                    methods:
+                      - GET
+              filters:
+                - StripPrefix=2
+                - name: AuthenticationFilter
+                  args:
+                    requiredRole: "user,admin"
+            - id: conductores-getvehicle
+              uri: lb://CONDUCTORES
+              predicates:
+                - name: Path
+                  args:
+                    patterns:
+                      - /api/v1/vehicles/{id}
+                - name: Method
+                  args:
+                    methods:
+                      - GET
+              filters:
+                - StripPrefix=2
+                - name: AuthenticationFilter
+                  args:
+                    requiredRole: "user,admin"
             - id: conductores
               uri: lb://CONDUCTORES
               predicates:
@@ -62,6 +94,9 @@ spring:
                       - /api/v1/vehicles/**
               filters:
                 - StripPrefix=2
+                - name: AuthenticationFilter
+                  args:
+                    requiredRole: "admin"
             - id: pagos
               uri: lb://PAGOS
               predicates:
