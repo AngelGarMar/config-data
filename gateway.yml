@@ -115,6 +115,9 @@ spring:
                       - /api/v1/paraderos/**
               filters:
                 - StripPrefix=2
+                - name: AuthenticationFilter
+                  args:
+                    requiredRole: "user,admin"
             - id: usuarios-login
               uri: lb://USUARIOS
               predicates:
