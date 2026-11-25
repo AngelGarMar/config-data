@@ -3,9 +3,9 @@ spring:
     virtual:
       enabled: true
   datasource:
-    url: jdbc:mysql://localhost:3306/usuarios
+    url: jdbc:mysql://usuariosbd:3306/usuarios
     username: root
-    password: root
+    password: users
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
@@ -16,8 +16,8 @@ server:
 app:
   maintenance:
     createUser: true
-    expirationInMinutes: 10
-    secretKey: QW5nZWwgQWxlamFuZHJvIEdhcmNpYSBNYXJ0aW5leiBBbmdlbCBBbGVqYW5kcm8gR2FyY2lhIE1hcnRpbmV6
+    expirationInMinutes: ${expiration}
+    secretKey: ${secret.key}
 management:
   endpoints:
     web:
@@ -30,4 +30,4 @@ eureka:
     instance-id: ${spring.application.name}:${random.uuid}
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${eureka.client.service-url.defaultZone}
