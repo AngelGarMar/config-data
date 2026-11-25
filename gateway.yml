@@ -106,6 +106,9 @@ spring:
                       - /api/v1/pagos/**
               filters:
                 - StripPrefix=2
+                - name: AuthenticationFilter
+                  args:
+                    requiredRole: "user,admin"
             - id: paraderos
               uri: lb://PARADEROS
               predicates:
